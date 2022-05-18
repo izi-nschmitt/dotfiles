@@ -1,0 +1,69 @@
+# This is Git's per-user configuration file.
+[core]
+    excludesfile = ~/dotfiles/.gitignore_global
+[alias]
+    stash-unapply = !git stash show -p | git apply -R
+    st = status -b -s
+    stp = status --porcelain
+    ci = commit
+    br = branch
+    co = checkout
+    cp = cherry-pick
+    rb = rebase
+    rz = reset --hard HEAD
+    ri = rebase -i --autosquash
+    unstage = reset HEAD
+    lg = !"git log-pretty2"
+    lola = !"git log-pretty2 --all"
+    log-pretty1 = log --graph --pretty=format:'%h -%C(auto)%d%Creset %s %C(magenta)(<%an> %cr)%Creset'
+    log-pretty2 = log --graph --format=format:'%C(dim white)%h%C(reset) -%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(yellow)(%C(reset)%C(magenta)<%an> %C(dim)%cr%C(reset)%C(yellow))%C(reset)'
+    lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"
+    lpull = "!git --no-pager log HEAD..origin/$(git currentbranch) --oneline"
+    whatsnew = "!git diff origin/$(git currentbranch)...HEAD"
+    whatscoming = "!git diff HEAD...origin/$(git currentbranch)"
+    currentbranch = "!git branch | grep \"^\\*\" | cut -d \" \" -f 2"
+    dsf = "!git diff --color $@ | diff-so-fancy"
+    tt = "!git describe --tags --abbrev=0 $(git rev-list --tags --max-count=10)"
+    spring = "!git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -d"
+    stash-apply = "!f() { git stash apply stash@{$1}; }; f"
+    push-all = "!git co develop && git push && git co master && git push && git push --tags && git co develop"
+    pull-all = "!git co develop && git pull && git co master && git pull && git co develop"
+[diff]
+    mnemonicPrefix = true
+    renames = true
+	wsErrorHighlight = all
+[push]
+    default = current
+[pull]
+    rebase = merges
+[remote "origin"]
+    prune = true
+[color]
+    ui = true
+    branch = auto
+    diff = auto
+    status = auto
+    interactive = auto
+[format]
+    pretty = oneline
+[tag]
+    sort = version:refname
+[versionsort]
+    prereleaseSuffix = -pre
+    prereleaseSuffix = .pre
+    prereleaseSuffix = -beta
+    prereleaseSuffix = .beta
+    prereleaseSuffix = -rc
+    prereleaseSuffix = .rc
+[merge]
+    ff = no
+[gitflow "feature.finish"]
+    no-ff = true
+[gitflow "bugfix.finish"]
+    no-ff = true
+[include]
+    path = ~/dotfiles/.gitconfig_user
+[commit]
+    gpgsign = true
+[init]
+	defaultBranch = master

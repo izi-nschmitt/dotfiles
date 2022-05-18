@@ -1,0 +1,6 @@
+.gitconfig_user
+bashrc.d/.bash_user
+.tmux/plugins/*
+!.tmux/plugins/.gitkeep
+.tmux/resurrect
+.vim/.netrwhist

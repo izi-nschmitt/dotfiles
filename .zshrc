@@ -100,7 +100,7 @@ setopt rmstarsilent
 [[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 # NODENV
-[[ -x "$(command -v nodenv)" ]] && eval "$(nodenv init -)"
+command -v nodenv > /dev/null && eval "$(nodenv init -)"
 
 # PYENV
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init --path)"
@@ -115,6 +115,7 @@ setopt rmstarsilent
 
 # HOMEBREW
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+test -e /opt/homebrew/bin/brew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ITERM2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

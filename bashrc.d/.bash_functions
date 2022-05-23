@@ -56,3 +56,11 @@ function patchMolecule() {
     libexec/bin/pip install molecule-docker --prefix libexec
     cd -
 }
+
+function createpr() {
+    base="${1:-develop}"
+    sre="bmouterd-izi,guillaumelecerf,izi-hamza-elmiqdam,thomasisaacsibille"
+    reviewers="${2:-$sre}"
+
+    gh pr create --title "$(git rev-parse --abbrev-ref HEAD)" --body "" --base "$base" --reviewer "$reviewers"
+}

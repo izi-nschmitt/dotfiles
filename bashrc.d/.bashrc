@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -e ~/dotfiles/bashrc.d/.bash_aliases ]; then
     . ~/dotfiles/bashrc.d/.bash_aliases
 fi

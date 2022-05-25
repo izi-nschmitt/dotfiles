@@ -45,25 +45,25 @@
     status = auto
     interactive = auto
 [format]
-    pretty = oneline
+  pretty = oneline
 [tag]
-    sort = version:refname
+  sort = version:refname
 [versionsort]
-    prereleaseSuffix = -pre
-    prereleaseSuffix = .pre
-    prereleaseSuffix = -beta
-    prereleaseSuffix = .beta
-    prereleaseSuffix = -rc
-    prereleaseSuffix = .rc
+  prereleaseSuffix = -pre
+  prereleaseSuffix = .pre
+  prereleaseSuffix = -beta
+  prereleaseSuffix = .beta
+  prereleaseSuffix = -rc
+  prereleaseSuffix = .rc
 [merge]
-    ff = no
+  ff = no
 [gitflow "feature.finish"]
-    no-ff = true
+  no-ff = true
 [gitflow "bugfix.finish"]
-    no-ff = true
+  no-ff = true
 [include]
-    path = ~/dotfiles/.gitconfig_user
+  path = ~/dotfiles/.gitconfig_user
 [commit]
-    gpgsign = true
+  gpgsign = true
 [init]
 	defaultBranch = master

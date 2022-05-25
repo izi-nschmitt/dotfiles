@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function mkcdir() {
     mkdir -p "$@" && cd "$@"
 }

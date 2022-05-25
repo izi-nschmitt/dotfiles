@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 Blk='\e[0;30m' # Black - Regular
 Red='\e[0;31m' # Red
 Grn='\e[0;32m' # Green

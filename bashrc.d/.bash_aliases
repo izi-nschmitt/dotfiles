@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # NAVIGATION
 alias scrl="screen -ls"
 alias peak="tail -n 3"

@@ -64,3 +64,21 @@ function createpr() {
 
     gh pr create --title "$(git rev-parse --abbrev-ref HEAD)" --body "" --base "$base" --reviewer "$reviewers"
 }
+
+function get_tf_user() {
+    user=$(terraform output -json | jq -r --arg app "$1" '.[$app].value')
+    key_id="$(echo "$user" | jq -r '.user_ak')"
+    secret="$(echo "$user" | jq -r '.user_sk' | base64 -d | gpg --decrypt -q)"
+
+    echo "AWS_ACCESS_KEY_ID=$key_id"
+    echo "AWS_SECRET_ACCESS_KEY=$secret"
+}
+
+function get_cs_user() {
+    user=$(terraform output -json | jq -r --arg app "$1_cs" --argjson index "$2" '.[$app].value[$index]')
+    key_id="$(echo "$user" | jq -r '.user_ak')"
+    secret="$(echo "$user" | jq -r '.user_sk' | base64 -d | gpg --decrypt -q)"
+
+    echo "AWS_ACCESS_KEY_ID=$key_id"
+    echo "AWS_SECRET_ACCESS_KEY=$secret"
+}

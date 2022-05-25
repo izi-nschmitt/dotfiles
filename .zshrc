@@ -96,11 +96,15 @@ setopt rmstarsilent
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# HOMEBREW
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+test -e /opt/homebrew/bin/brew && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # DIRENV
 [[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 # NODENV
-command -v nodenv > /dev/null && eval "$(nodenv init -)"
+[[ -x "$(command -v nodenv)" ]] && eval "$(nodenv init -)"
 
 # PYENV
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init --path)"
@@ -112,10 +116,6 @@ command -v nodenv > /dev/null && eval "$(nodenv init -)"
 
 # HELM
 [[ -x "$(command -v helm)" ]] && source <(helm completion zsh)
-
-# HOMEBREW
-test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-test -e /opt/homebrew/bin/brew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ITERM2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

@@ -7,8 +7,13 @@ Fichiers de configuration pour les variables d'environnement, le prompt bash, gi
 ```bash
 cd ~
 git clone git@github.com:izi-nschmitt/dotfiles.git
-#puis l'un des scripts d'install. ex:
-./dotfiles/install/zsh.sh
+# puis créer des liens symboliques vers tous les fichiers que vous souhaitez utiliser
+ln -s dotfiles/.ansible.cfg
+ln -s dotfiles/.gitconfig
+ln -s dotfiles/.p10k.zsh
+ln -s dotfiles/.vim
+ln -s dotfiles/.vimrc
+ln -s dotfiles/.zshrc
 ```
 
 ## Rôle de chaque fichier
@@ -24,9 +29,8 @@ git clone git@github.com:izi-nschmitt/dotfiles.git
 
 ### ZSH
 
-- **locales** : impose en_US.UTF-8 en locale. Nécessaire au bon fonctionnement des fonts type powerline.
+- **locales** : impose en_US.UTF-8 en locale. Nécessaire au bon fonctionnement des fonts type powerline sur linux
 - **zshrc** : config zsh
-- **zshrc-default** : .zshrc original
 
 ### GIT
 
@@ -43,33 +47,44 @@ git clone git@github.com:izi-nschmitt/dotfiles.git
 
 ### .inputrc
 
+> utile uniquement sur bash
+
 Permet de modifier le comportement du terminal lorsque vous écrivez une commande. Celui-ci vous permet de modifier le comportement des flêches haut/bas afin de rechercher dans l'historique les commandes correspondant à votre commande en cours. Il permet également d'utiliser ctrl+fleche gauche/droite afin de passer de mot en mot sur la commande en cours de saisie.
 
 ### .npmrc
 
-proxy pour npm & change le path d'installation des modules globaux
+configuration du scope @iziwork
 
 ## Outils tierces
 
 ### Oh my zsh
 
+- Utilité: Framework de configuration pour zsh
+- Source: [https://ohmyz.sh/](https://ohmyz.sh)
+- Installation:
+
 ```bash
-sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Powerlevel10k
+
+- Utilité: Thème zsh
+- Source: [Github](https://github.com/romkatv/powerlevel10k)
+- Installation:
+
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
 ### Nodenv
 
-Utilité: Gestion de versions concurrentes de node.js
-Source: [https://github.com/nodenv/nodenv](Github)
-
-#### Installation
+- Utilité: Gestion de versions concurrentes de node.js
+- Source: [Github](https://github.com/nodenv/nodenv)
+- Installation:
 
 ```bash
-git clone https://github.com/nodenv/nodenv.git ~/.nodenv;
-cd ~/.nodenv && src/configure && make -C src;
-mkdir -p plugins;
-git clone https://github.com/nodenv/node-build.git plugins/node-build;
+brew install nodenv nodenv-update nodenv-package-rehash nodenv-package-json-engine
 ```
 
 Ajouter '~/.nodenv/bin' au $PATH (c'est déjà le cas si bashrc.d/.bash_env est chargé). Sinon:
@@ -87,21 +102,12 @@ Enfin
 
 ### Pyenv
 
-Utilité: Gestion de versions concurrentes de python
-Source: [https://github.com/pyenv/pyenv](Github)
-
-#### Installation
-
-Chaque version de pyhton téléchargée est ensuite compilée. L'installation nécessite donc certaines dépendances sytème.
+- Utilité: Gestion de versions concurrentes de python
+- Source: [Github](https://github.com/pyenv/pyenv)
+- Installation:
 
 ```bash
-sudo apt-get install -y build-essential libbz2-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev tk-dev
-```
-
-Installer de pyenv
-
-```
-curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+brew install pyenv
 ```
 
 Ajouter '~/.pyenv/bin' au $PATH (c'est déjà le cas si bashrc.d/.bash_env est chargé). Sinon:
@@ -121,68 +127,13 @@ pyenv virtualenv 3.7.2 default
 pyenv global default
 ```
 
-### Docker
-
-#### Installation
-
-```bash
-sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update && sudo apt-get install docker-ce
-```
-
-### Kubernetes
-
-#### Installation
-
-Dans Docker Desktop, activer Kubernetes. Puis:
-
-```bash
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update && sudo apt-get install -y kubectl
-
-ln -s /c/Users/{YourUsername}/.kube/config ~/.kube/config
-```
-
 ### AWS
 
-### Installation
+- Utilité: CLI AWS
+- Source: [Documentation AWS](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
+- Installation:
 
 ```bash
 # aws
-pip install awscli
-# sam
-pip install aws-sam-cli
-# ecs
-sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
-sudo chmod +x /usr/local/bin/ecs-cli
-# eks
-sudo curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
-sudo chmod +x /usr/local/bin/aws-iam-authenticator
-```
-
-> Note sur EKS: par défaut, seul le créateur du cluster dispose d'un accès admin. Il est donc fortement probable qu'il soit nécessaire de se connecter via un rôle. Auquel cas, la section _users_ du .kube/config devra être modifiée.
-
-### Configuration
-
-```bash
-ecs-cli configure profile --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
-```
-
-### Redis
-
-```bash
-wget http://download.redis.io/releases/redis-5.0.4.tar.gz
-tar xzf redis-5.0.4.tar.gz
-cd redis-5.0.4
-make
-sudo mkdir -p /usr/local/src/redis-5.0.4
-sudo mv ./* /usr/local/src/redis-5.0.4
-cd /usr/local/bin
-sudo ln -s ../src/redis-5.0.4/redis-cli
-sudo ln -s ../src/redis-5.0.4/redis-server
-sudo ln -s ../src/redis-5.0.4/redis-sentinel
-
+brew install awscli
 ```

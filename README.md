@@ -77,6 +77,8 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
+> Note au sujet de la police: si vous utilisez iterm, p10k vous proposera d'instaler MesloLGS NF, sinon vous devrez le faire [à la main](https://github.com/romkatv/powerlevel10k#fonts)
+
 ### Nodenv
 
 - Utilité: Gestion de versions concurrentes de node.js

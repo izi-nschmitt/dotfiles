@@ -84,3 +84,8 @@ function get_cs_user() {
     echo "AWS_ACCESS_KEY_ID=$key_id"
     echo "AWS_SECRET_ACCESS_KEY=$secret"
 }
+
+function create_tf_module() {
+  mkdir -p "$1"
+  touch "./$1/main.tf" "./$1/outputs.tf" "./$1/variables.tf"
+}

@@ -33,3 +33,5 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
 export GPG_TTY=$TTY
+
+export GH_DEFAULT_TEAM=""

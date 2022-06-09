@@ -61,8 +61,7 @@ function patchMolecule() {
 
 function createpr() {
     base="${1:-develop}"
-    sre="bmouterd-izi,guillaumelecerf,izi-hamza-elmiqdam,thomasisaacsibille"
-    reviewers="${2:-$sre}"
+    reviewers="${2:-$GH_DEFAULT_TEAM}"
 
     gh pr create --title "$(git rev-parse --abbrev-ref HEAD)" --body "" --base "$base" --reviewer "$reviewers"
 }

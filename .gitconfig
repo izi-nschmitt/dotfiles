@@ -13,8 +13,8 @@
   rz = reset --hard HEAD
   ri = rebase -i --autosquash
   unstage = reset HEAD
-  lg = !"git log-pretty2"
-  lola = !"git log-pretty2 --all"
+  lg = "!git log-pretty2"
+  lola = "!git log-pretty2 --all"
   log-pretty1 = log --graph --pretty=format:'%h -%C(auto)%d%Creset %s %C(magenta)(<%an> %cr)%Creset'
   log-pretty2 = log --graph --format=format:'%C(dim white)%h%C(reset) -%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(yellow)(%C(reset)%C(magenta)<%an> %C(dim)%cr%C(reset)%C(yellow))%C(reset)'
   lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"

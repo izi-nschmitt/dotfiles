@@ -2,32 +2,33 @@
 [core]
   excludesfile = ~/dotfiles/.gitignore_global
 [alias]
-  stash-unapply = !git stash show -p | git apply -R
-  st = status -b -s
-  stp = status --porcelain
-  ci = commit
   br = branch
+  ci = commit
   co = checkout
   cp = cherry-pick
-  rb = rebase
-  rz = reset --hard HEAD
-  ri = rebase -i --autosquash
-  unstage = reset HEAD
-  lg = "!git log-pretty2"
-  lola = "!git log-pretty2 --all"
-  log-pretty1 = log --graph --pretty=format:'%h -%C(auto)%d%Creset %s %C(magenta)(<%an> %cr)%Creset'
-  log-pretty2 = log --graph --format=format:'%C(dim white)%h%C(reset) -%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(yellow)(%C(reset)%C(magenta)<%an> %C(dim)%cr%C(reset)%C(yellow))%C(reset)'
-  lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"
-  lpull = "!git --no-pager log HEAD..origin/$(git currentbranch) --oneline"
-  whatsnew = "!git diff origin/$(git currentbranch)...HEAD"
-  whatscoming = "!git diff HEAD...origin/$(git currentbranch)"
   currentbranch = "!git branch | grep \"^\\*\" | cut -d \" \" -f 2"
   dsf = "!git diff --color $@ | diff-so-fancy"
-  tt = "!git describe --tags --abbrev=0 $(git rev-list --tags --max-count=10)"
-  spring = "!git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -d"
-  stash-apply = "!f() { git stash apply stash@{$1}; }; f"
-  push-all = "!git co develop && git push && git co master && git push && git push --tags && git co develop"
+  lg = "!git log-pretty2"
+  log-pretty1 = log --graph --pretty=format:'%h -%C(auto)%d%Creset %s %C(magenta)(<%an> %cr)%Creset'
+  log-pretty2 = log --graph --format=format:'%C(dim white)%h%C(reset) -%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(yellow)(%C(reset)%C(magenta)<%an> %C(dim)%cr%C(reset)%C(yellow))%C(reset)'
+  lola = "!git log-pretty2 --all"
+  lpull = "!git --no-pager log HEAD..origin/$(git currentbranch) --oneline"
+  lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"
   pull-all = "!git co develop && git pull && git co master && git pull && git co develop"
+  purge = "!git branch  | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -D"
+  push-all = "!git co develop && git push && git co master && git push && git push --tags && git co develop"
+  rb = rebase
+  ri = rebase -i --autosquash
+  rz = reset --hard HEAD
+  spring = "!git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -d"
+  st = status -b -s
+  stash-apply = "!f() { git stash apply stash@{$1}; }; f"
+  stash-unapply = !git stash show -p | git apply -R
+  stp = status --porcelain
+  tt = "!git describe --tags --abbrev=0 $(git rev-list --tags --max-count=10)"
+  unstage = reset HEAD
+  whatscoming = "!git diff HEAD...origin/$(git currentbranch)"
+  whatsnew = "!git diff origin/$(git currentbranch)...HEAD"
 [diff]
   mnemonicPrefix = true
   renames = true
@@ -67,3 +68,5 @@
   gpgsign = true
 [init]
   defaultBranch = master
+[rebase]
+  autosquash = true

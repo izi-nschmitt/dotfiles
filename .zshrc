@@ -106,6 +106,9 @@ test -e /opt/homebrew/bin/brew && eval "$(/opt/homebrew/bin/brew shellenv)"
 # NODENV
 [[ -x "$(command -v nodenv)" ]] && eval "$(nodenv init -)"
 
+# RBENV
+[[ -x "$(command -v rbenv)" ]] && eval "$(rbenv init - zsh)"
+
 # PYENV
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init --path)"
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"

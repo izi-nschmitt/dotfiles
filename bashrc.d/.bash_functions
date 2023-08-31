@@ -88,3 +88,11 @@ function create_tf_module() {
   mkdir -p "$1"
   touch "./$1/main.tf" "./$1/outputs.tf" "./$1/variables.tf"
 }
+
+function get_gcloud_config() (
+  gcloud config get "$1" 2>/dev/null
+)
+
+function export_common_gcp_envrc() (
+  export GOOGLE_IMPERSONATE_SERVICE_ACCOUNT="$(get_gcloud_config 'auth/impersonate_service_account')"
+)

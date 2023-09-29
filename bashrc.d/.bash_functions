@@ -89,10 +89,55 @@ function create_tf_module() {
   touch "./$1/main.tf" "./$1/outputs.tf" "./$1/variables.tf"
 }
 
-function get_gcloud_config() (
-  gcloud config get "$1" 2>/dev/null
-)
+function validate_tf_init() {
+  if [ ! -f ".terraform/terraform.tfstate" ]; then
+    return 0
+  fi
 
-function export_common_gcp_envrc() (
+  state_key="$(jq -r '.backend.config.key | split("/") | last' .terraform/terraform.tfstate)"
+
+  if [ "$state_key" != "$1.json" ]; then
+    echo "Terraform is not initialized with the current environment"
+    return 1
+  fi
+
+  return 0
+}
+
+function get_gcloud_config() {
+  gcloud config get "$1" 2>/dev/null
+}
+
+function export_common_gcp_envrc() {
   export GOOGLE_IMPERSONATE_SERVICE_ACCOUNT="$(get_gcloud_config 'auth/impersonate_service_account')"
-)
+}
+
+function export_common_tf_cli_args() {
+  export TF_VAR_assume_deployment_role=false
+  export TF_CLI_ARGS_init="-backend-config=backend-$1.hcl -backend-config=profile=${2:-sre-prod}"
+  export TF_CLI_ARGS_plan="-var-file=$1.tfvars"
+  export TF_CLI_ARGS_apply="-var-file=$1.tfvars"
+  export TF_CLI_ARGS_import="-var-file=$1.tfvars"
+  export TF_CLI_ARGS_destroy="-var-file=$1.tfvars"
+  export TF_CLI_ARGS_console="-var-file=$1.tfvars"
+}
+
+function common_tf_envrc() {
+  export_common_tf_cli_args "$1" "$2"
+
+  if ! validate_tf_init "$1"; then
+    rm .terraform/terraform.tfstate
+    terraform init
+  fi
+}
+
+function common_gcp_envrc() {
+  export_common_gcp_envrc
+}
+
+function wait_port() {
+  while ! nc "$1" "$2"; do
+    echo -n "."
+    sleep 1
+  done
+}

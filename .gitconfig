@@ -7,7 +7,6 @@
   co = checkout
   cp = cherry-pick
   currentbranch = "!git branch | grep \"^\\*\" | cut -d \" \" -f 2"
-  dsf = "!git diff --color $@ | diff-so-fancy"
   lg = "!git log-pretty2"
   log-pretty1 = log --graph --pretty=format:'%h -%C(auto)%d%Creset %s %C(magenta)(<%an> %cr)%Creset'
   log-pretty2 = log --graph --format=format:'%C(dim white)%h%C(reset) -%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(yellow)(%C(reset)%C(magenta)<%an> %C(dim)%cr%C(reset)%C(yellow))%C(reset)'
@@ -33,6 +32,7 @@
   mnemonicPrefix = true
   renames = true
   wsErrorHighlight = all
+  colorMoved = default
 [push]
   default = current
 [pull]
@@ -58,6 +58,7 @@
   prereleaseSuffix = .rc
 [merge]
   ff = no
+  conflictstyle = diff3
 [gitflow "feature.finish"]
   no-ff = true
 [gitflow "bugfix.finish"]

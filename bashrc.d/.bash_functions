@@ -21,7 +21,7 @@ function replace() {
     dir=$(dirname "$3")
     echo "Replacing $cyan$old$white by $cyan$new$white in directory $cyan$dir$white ..."
     grep -rli "$old" * | xargs -i@ sed -i "s/$old_esc/$new_esc/g" @
-    echo $green
+    echo "$green"
     echo "Done"
 }
 
@@ -46,14 +46,14 @@ function getAnsiblePasswordHash() {
 function updateAwsCliForLinux() {
     setupdir=$(mktemp -d)
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "${setupdir}/awscliv2.zip"
-    unzip "${setupdir}/awscliv2.zip" -d $setupdir
+    unzip "${setupdir}/awscliv2.zip" -d "$setupdir"
     sudo "${setupdir}/aws/install" --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-    rm -rf $setupdir
+    rm -rf "$setupdir"
 }
 
 function patchMolecule() {
     molVersion=$(brew info --installed --json | jq -r '.[] | select(.name == "molecule") | .versions.stable')
-    cd /home/linuxbrew/.linuxbrew/Cellar/molecule/$molVersion
+    cd "/home/linuxbrew/.linuxbrew/Cellar/molecule/$molVersion"
     libexec/bin/pip uninstall docker-py
     libexec/bin/pip install molecule-docker --prefix libexec
     cd -
@@ -76,7 +76,7 @@ function get_tf_user() {
 }
 
 function get_cs_user() {
-    user=$(terraform output -json | jq -r --arg app "$1_cs" --argjson index "$2" '.[$app].value[$index]')
+    user=$(terraform output -json | jq -r --arg app "$1_cs" --arg comp "$2" '.[$app].value[$comp]')
     key_id="$(echo "$user" | jq -r '.user_ak')"
     secret="$(echo "$user" | jq -r '.user_sk' | base64 -d | gpg --decrypt -q)"
 

@@ -122,9 +122,6 @@ export PATH="$GOENV_ROOT/shims:$PATH_WITHOUT_GOENV"
 # KUBECTL
 [[ -x "$(command -v kubectl)" ]] && source <(kubectl completion zsh)
 
-# HELM
-[[ -x "$(command -v helm)" ]] && source <(helm completion zsh)
-
 # ITERM2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

@@ -15,12 +15,12 @@
   lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"
   pf = push --force-with-lease
   pull-all = "!git co develop && git pull && git co master && git pull && git co develop"
-  purge = "!git branch  | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -D"
+  purge = "!git branch  | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | grep -v \"main\" | xargs -n 1 git branch -D"
   push-all = "!git co develop && git push && git co master && git push && git push --tags && git co develop"
   rb = rebase
   ri = rebase -i --autosquash
   rz = reset --hard HEAD
-  spring = "!git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -d"
+  spring = "!git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | grep -v \"main\" | xargs -n 1 git branch -d"
   st = status -b -s
   stash-apply = "!f() { git stash apply stash@{$1}; }; f"
   stash-unapply = !git stash show -p | git apply -R

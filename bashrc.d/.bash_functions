@@ -115,7 +115,7 @@ function export_common_gcp_envrc() {
 function export_common_tf_cli_args() {
   export TF_VAR_assume_deployment_role=false
   export TF_CLI_ARGS_init="-backend-config=backend-$1.hcl -backend-config=profile=${2:-sre-prod}"
-  export TF_CLI_ARGS_plan="-var-file=$1.tfvars"
+  export TF_CLI_ARGS_plan="-var-file=$1.tfvars -lock=false"
   export TF_CLI_ARGS_apply="-var-file=$1.tfvars"
   export TF_CLI_ARGS_import="-var-file=$1.tfvars"
   export TF_CLI_ARGS_destroy="-var-file=$1.tfvars"
